@@ -1,10 +1,6 @@
-import machine
-import pca9685
-import math
-
+import machine, math, pca9685
 
 _DC_MOTORS = ((8, 9, 10), (13, 12, 11))
-
 
 class DCMotors:
     def __init__(self, i2c, address=0x40, freq=1600):
@@ -119,6 +115,6 @@ class Servos:
     def release(self, index):
         self.pca9685.duty(index, 0)
 
-i2c = machine.I2C(scl=machine.Pin(22), sda=machine.Pin(21))
-motors = DCMotors(i2c)
-servos = Servos(i2c)
+i2c_pins = machine.I2C(scl=machine.Pin(22), sda=machine.Pin(21))
+motor = DCMotors(i2c_pins)
+servo = Servos(i2c_pins)

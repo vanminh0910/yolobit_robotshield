@@ -1,290 +1,353 @@
-Blockly.Blocks['lcd1602_create'] = {
+Blockly.Blocks['block_move_move'] = {
   init: function() {
     this.jsonInit(
       {
-        "type": "lcd1602_create",
-        "message0": Blockly.Msg.LCD1602_CREATE_MESSAGE0,
+        "type": "block_move_move",
+        "message0": "%1 di chuyển %2 với tốc độ %3 (0-100)",
         "args0": [
           {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
-          },
-          {
-            "type": "field_number",
-            "name": "WIDTH",
-            "value": 16,
-            "min": 0
-          },
-          {
-            "type": "field_number",
-            "name": "HEIGHT",
-            "value": 2,
-            "min": 0
-          },
-          {
-            "type": "field_input",
-            "name": "ADDR",
-            "text": "0x27"
-          }
-        ],
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_CREATE_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_CREATE_HELPURL
-      }
-    );
-  }
-};
-
-Blockly.Python['lcd1602_create'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  var number_width = block.getFieldValue('WIDTH');
-  var number_height = block.getFieldValue('HEIGHT');
-  var text_addr = block.getFieldValue('ADDR');
-
-  // TODO: Assemble Python into code variable.
-  Blockly.Python.definitions_['import_yolobit'] = 'from yolobit import *';
-  Blockly.Python.definitions_['import_i2c'] = 'from machine import Pin, I2C';
-  Blockly.Python.definitions_['import_lcd1602'] = 'from rgb1602 import *';
-  //lcd = LCD1602(I2C(scl=Pin(22), sda=Pin(21)), 0x27)
-  var code = variable_lcd + ' = LCD1602(I2C(scl=Pin(22), sda=Pin(21)), ' + text_addr + ')\n';
-  return code;
-};
-
-Blockly.Blocks['lcd1602_text'] = {
-  init: function() {
-    this.jsonInit(
-      {
-        "type": "lcd1602_text",
-        "message0": Blockly.Msg.LCD1602_TEXT_MESSAGE0,
-        "args0": [
-          {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
-          },
-          {
-            "type": "input_dummy"
-          },
-          {
-            "type": "input_value",
-            "name": "TEXT"
-          },
-          {
-            "type": "input_value",
-            "name": "COL",
-            "check": "Number"
-          },
-          {
-            "type": "input_value",
-            "name": "ROW",
-            "check": "Number"
-          },
-          {
-            "type": "input_dummy"
-          }
-        ],
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_TEXT_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_TEXT_HELPURL
-      }
-    );
-  }
-};
-
-Blockly.Python['lcd1602_text'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  var value_text = Blockly.Python.valueToCode(block, 'TEXT', Blockly.Python.ORDER_ATOMIC);
-  var value_col = Blockly.Python.valueToCode(block, 'COL', Blockly.Python.ORDER_ATOMIC);
-  var value_row = Blockly.Python.valueToCode(block, 'ROW', Blockly.Python.ORDER_ATOMIC);
-  // TODO: Assemble Python into code variable.
-  //lcd.text('Hello, World 1!', 0, 0)
-  var code = variable_lcd + '.text(str(' + value_text + '), ' + value_col + ', ' + value_row + ')\n';
-  return code;
-};
-
-Blockly.Blocks['lcd1602_onoff'] = {
-  init: function() {
-    this.jsonInit(
-      {
-        "type": "lcd1602_onoff",
-        "message0": Blockly.Msg.LCD1602_ONOFF_MESSAGE0,
-        "args0": [
-          {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
+            "type": "field_image",
+            "src": "https://s3-ap-southeast-1.amazonaws.com/codeblock.ohstem.vn/block_images/move.png",
+            "width": 20,
+            "height": 20,
+            "alt": "",
+            "flipRtl": false
           },
           {
             "type": "field_dropdown",
-            "name": "ONOFF",
+            "name": "direction",
             "options": [
               [
-                Blockly.Msg.LCD1602_ONOFF_MESSAGE1,
-                "ON"
+                {
+                  "src": "https://image.flaticon.com/icons/svg/59/59043.svg",
+                  "width": 15,
+                  "height": 15,
+                  "alt": "*"
+                },
+                "90"
               ],
               [
-                Blockly.Msg.LCD1602_ONOFF_MESSAGE2,
-                "OFF"
-              ]
-            ]
-          }
-        ],
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_ONOFF_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_ONOFF_HELPURL
-      }
-    );
-  }
-};
-
-Blockly.Python['lcd1602_onoff'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  var dropdown_onoff = block.getFieldValue('ONOFF');
-  // TODO: Assemble Python into code variable.
-  //lcd.on()
-  //lcd.off()
-  var code = '';
-  if (dropdown_onoff == 'ON') {
-    code = variable_lcd + '.on()\n';
-  } else {
-    code = variable_lcd + '.off()\n';
-  }
-  return code;
-};
-
-Blockly.Blocks['lcd1602_clear'] = {
-  init: function() {
-    this.jsonInit(
-      {
-        "type": "lcd1602_clear",
-        "message0": Blockly.Msg.LCD1602_CLEAR_MESSAGE0,
-        "args0": [
-          {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
-          }
-        ],
-        "previousStatement": null,
-        "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_CLEAR_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_CLEAR_HELPURL
-      }
-    );
-  }
-};
-
-Blockly.Python['lcd1602_clear'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  // TODO: Assemble Python into code variable.
-  //lcd.clear()
-  var code = variable_lcd + '.clear()\n';
-  return code;
-};
-
-Blockly.Blocks['lcd1602_backlight'] = {
-  init: function() {
-    this.jsonInit(
-      {
-        "type": "lcd1602_backlight",
-        "message0": Blockly.Msg.LCD1602_BACKLIGHT_MESSAGE0,
-        "args0": [
-          {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
-          },
-          {
-            "type": "field_dropdown",
-            "name": "ONOFF",
-            "options": [
-              [
-                Blockly.Msg.LCD1602_BACKLIGHT_MESSAGE1,
-                "1"
+                {
+                  "src": "https://image.flaticon.com/icons/svg/959/959159.svg",
+                  "width": 15,
+                  "height": 15,
+                  "alt": "*"
+                },
+                "270"
               ],
               [
-                Blockly.Msg.LCD1602_BACKLIGHT_MESSAGE2,
+                {
+                  "src": "https://image.flaticon.com/icons/svg/860/860774.svg",
+                  "width": 15,
+                  "height": 15,
+                  "alt": "*"
+                },
+                "180"
+              ],
+              [
+                {
+                  "src": "https://image.flaticon.com/icons/svg/74/74474.svg",
+                  "width": 15,
+                  "height": 15,
+                  "alt": "*"
+                },
                 "0"
               ]
             ]
+          },
+          {
+            min: 0,
+            type: "input_value",
+            check: "Number",
+            value: 50,
+            name: "speed",
           }
         ],
+        "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_BACKLIGHT_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_BACKLIGHT_HELPURL
+        "colour": "#00CEB9",
+        "tooltip": "",
+        "helpUrl": ""
       }
     );
   }
 };
 
-Blockly.Python['lcd1602_backlight'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  var dropdown_onoff = block.getFieldValue('ONOFF');
+Blockly.Python["block_move_move"] = function (block) {
+  Blockly.Python.definitions_['import_robotshield'] = 'from robotshield import *';
+  var dir = block.getFieldValue("direction");
+  var speed = Blockly.Python.valueToCode(block, 'speed', Blockly.Python.ORDER_ATOMIC);
   // TODO: Assemble Python into code variable.
-  //lcd.backlight(1)
-  //lcd.backlight(0)
-  var code = variable_lcd + '.backlight(' + dropdown_onoff + ')\n';
+  var code = "motor.move(" + dir + ", " + speed + ")\n";
   return code;
 };
 
-Blockly.Blocks['lcd1602_set_scroll'] = {
+Blockly.Blocks['block_move_motor'] = {
   init: function() {
     this.jsonInit(
       {
-        "type": "lcd1602_set_scroll",
-        "message0": Blockly.Msg.LCD1602_SCROLL_MESSAGE0,
+        "type": "block_move_motor",
+        "message0": "%3 động cơ %1 với tốc độ  %2 (-100 đến 100)",
         "args0": [
           {
-            "type": "field_variable",
-            "name": "lcd",
-            "variable": "lcd"
-          },
-          {
             "type": "field_dropdown",
-            "name": "SCROLL",
+            "name": "motor",
             "options": [
               [
-                Blockly.Msg.LCD1602_SCROLL_MESSAGE1,
-                "LEFT"
+                "M1",
+                "0"
               ],
               [
-                Blockly.Msg.LCD1602_SCROLL_MESSAGE2,
-                "RIGHT"
+                "M2",
+                "1"
               ]
             ]
+          },
+          {
+            "type": "input_value",
+            "name": "speed",
+            "check": "Number",
+          },
+          {
+            "type": "field_image",
+            "src": "https://image.flaticon.com/icons/svg/2479/2479548.svg",
+            "width": 20,
+            "height": 20,
+            "alt": "*",
+            "flipRtl": false
           }
         ],
+        "inputsInline": true,
         "previousStatement": null,
         "nextStatement": null,
-        "colour": "#0fbc11",
-        "tooltip": Blockly.Msg.LCD1602_SCROLL_TOOLTIP,
-        "helpUrl": Blockly.Msg.LCD1602_SCROLL_HELPURL
+        "colour": "#00CEB9",
+        "tooltip": "",
+        "helpUrl": ""
       }
     );
   }
 };
 
-Blockly.Python['lcd1602_set_scroll'] = function(block) {
-  var variable_lcd = Blockly.Python.variableDB_.getName(block.getFieldValue('lcd'), Blockly.Variables.NAME_TYPE);
-  var dropdown_scroll = block.getFieldValue('SCROLL');
+Blockly.Python["block_move_motor"] = function (block) {
+  Blockly.Python.definitions_['import_robotshield'] = 'from robotshield import *';
+  var motor = block.getFieldValue("motor");
+  var speed = Blockly.Python.valueToCode(block, 'speed', Blockly.Python.ORDER_ATOMIC);
   // TODO: Assemble Python into code variable.
-  //lcd.shift_left()
-  //lcd.shift_right()
-  var code = '';
-  if (dropdown_scroll == 'LEFT') {
-    code = variable_lcd + '.shift_left()\n';
-  } else {
-    code = variable_lcd + '.shift_right()\n';
-  }
+  var code = "motor.speed(" + motor + ", " + speed + ")\n";
   return code;
 };
+
+
+Blockly.Blocks['block_move_stop'] = {
+  init: function() {
+    this.jsonInit(
+      {
+        
+          "type": "block_move_stop",
+          "message0": "%1 dừng di chuyển",
+          "args0": [
+            {
+              "type": "field_image",
+              "src": "https://www.flaticon.com/svg/static/icons/svg/827/827428.svg",
+              "width": 20,
+              "height": 20,
+              "alt": "*",
+              "flipRtl": false
+            }],
+          "inputsInline": true,
+          "previousStatement": null,
+          "nextStatement": null,
+          "colour": "#00CEB9",
+          "tooltip": "",
+          "helpUrl": ""
+        
+      }
+    );
+  }
+};
+
+Blockly.Python["block_move_stop"] = function (block) {
+  Blockly.Python.definitions_['import_robotshield'] = 'from robotshield import *';
+  // TODO: Assemble Python into code variable.
+  var code = "motor.move(0, 0)\n";
+  return code;
+};
+
+
+Blockly.Blocks['block_move_servo'] = {
+  init: function() {
+    this.jsonInit(
+      {
+        "type": "block_move_servo",
+        "message0": "%3 servo %1 xoay góc %2 (0-180)",
+        "args0": [
+          
+          {
+            "type": "field_dropdown",
+            "name": "servo",
+            "options": [
+              [
+                "S1",
+                "0"
+              ],
+              [
+                "S2",
+                "1"
+              ],
+              [
+                "S3",
+                "2"
+              ],
+              [
+                "S4",
+                "3"
+              ],
+              [
+                "S5",
+                "4"
+              ],
+              [
+                "S6",
+                "5"
+              ],
+              [
+                "S7",
+                "6"
+              ],
+              [
+                "S8",
+                "7"
+              ]
+            ]
+          },
+          {
+            "type": "input_value",
+            "name": "angle",
+            "check": "Number"
+          },
+          {
+            "type": "field_image",
+            "src": "https://image.winudf.com/v2/image/YXBwaW52ZW50b3IuYWlfeXNyZ2dzLlNlcnZvbW90b3Jrb250cm9sX2ljb25fYTV2MXE0cHk/icon.png?w=170&fakeurl=1",
+            "width": 20,
+            "height": 20,
+            "alt": "*",
+            "flipRtl": false
+          }
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#00CEB9",
+        "tooltip": "",
+        "helpUrl": ""
+      }
+    );
+  }
+};
+
+Blockly.Python["block_move_servo"] = function (block) {
+  Blockly.Python.definitions_['import_robotshield'] = 'from robotshield import *';
+  var servo = block.getFieldValue("servo");
+  var angle = Blockly.Python.valueToCode(block, 'angle', Blockly.Python.ORDER_ATOMIC);
+  // TODO: Assemble Python into code variable.
+  var code = "servo.position(" + servo + ", " + angle + ")\n";
+  return code;
+};
+
+Blockly.Blocks['block_move_servo360'] = {
+  init: function() {
+    this.jsonInit(
+      {
+        "type": "block_move_servo360",
+        "message0": "%1 servo (360°) %2 xoay %3 tốc độ %4(0-100)",
+        "args0": [
+          {
+            "type": "field_image",
+            "src": "https://image.winudf.com/v2/image/YXBwaW52ZW50b3IuYWlfeXNyZ2dzLlNlcnZvbW90b3Jrb250cm9sX2ljb25fYTV2MXE0cHk/icon.png?w=170&fakeurl=1",
+            "width": 20,
+            "height": 20,
+            "alt": "*",
+            "flipRtl": false
+          },
+          {
+            "type": "field_dropdown",
+            "name": "servo",
+            "options": [
+              [
+                "S1",
+                "0"
+              ],
+              [
+                "S2",
+                "1"
+              ],
+              [
+                "S3",
+                "2"
+              ],
+              [
+                "S4",
+                "3"
+              ],
+              [
+                "S5",
+                "4"
+              ],
+              [
+                "S6",
+                "5"
+              ],
+              [
+                "S7",
+                "6"
+              ],
+              [
+                "S8",
+                "7"
+              ]
+            ]
+          },
+          {
+            "type": "field_dropdown",
+            "name": "direction",
+            "options": [
+              [
+                "tới",
+                "0"
+              ],
+              [
+                "lui",
+                "1"
+              ]
+            ]
+          },
+          {
+            "type": "input_value",
+            "name": "speed",
+            "check": "Number"
+          },
+          
+        ],
+        "inputsInline": true,
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": "#00CEB9",
+        "tooltip": "",
+        "helpUrl": ""
+      }
+    );
+  }
+};
+
+Blockly.Python["block_move_servo360"] = function (block) {
+  Blockly.Python.definitions_['import_robotshield'] = 'from robotshield import *';
+  var servo = block.getFieldValue("servo");
+  var dir = block.getFieldValue("direction");
+  var speed = Blockly.Python.valueToCode(block, 'speed', Blockly.Python.ORDER_ATOMIC);
+  // TODO: Assemble Python into code variable.
+  var code = "servo.spin(" + servo + ", " + dir + ", " + speed + ")\n";
+  return code;
+};
+
+
