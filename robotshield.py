@@ -52,14 +52,15 @@ class DCMotors:
             if self._pin(in2) and not self._pin(in1):
                 value = -value
             return value
+        value = int(4095 * (value/100))
         if value > 0:
             # Forward
-            self._pin(in2, False)
-            self._pin(in1, True)
-        elif value < 0:
-            # Backward
             self._pin(in1, False)
             self._pin(in2, True)
+        elif value < 0:
+            # Backward
+            self._pin(in2, False)
+            self._pin(in1, True)
         else:
             # Release
             self._pin(in1, False)
