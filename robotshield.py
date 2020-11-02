@@ -42,8 +42,8 @@ class DCMotors:
           m1 = 0
           m2 = 0
 
-        self.speed(0, int(m1))
-        self.speed(1, int(m2))
+        self.speed(0, int(m2))
+        self.speed(1, int(m1))
 
     def speed(self, index, value=None):
         pwm, in2, in1 = _DC_MOTORS[index]
@@ -115,7 +115,7 @@ class Servos:
 
     def release(self, index):
         self.pca9685.duty(index, 0)
-
+ 
 i2c_pins = machine.I2C(scl=machine.Pin(22), sda=machine.Pin(21))
 motor = DCMotors(i2c_pins)
 servo = Servos(i2c_pins)
