@@ -211,6 +211,9 @@ class Servos:
     if degrees < 0 or degrees > max_degrees:
       return
 
+    if max_degrees == 270 and degrees < 2:
+      degrees = 2
+
     span = self.max_duty - self.min_duty
     duty = self.min_duty + span * degrees / max_degrees
     duty = min(self.max_duty, max(self.min_duty, int(duty)))
